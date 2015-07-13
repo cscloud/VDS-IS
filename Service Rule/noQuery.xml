@@ -1,0 +1,16 @@
+<CDSRules xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema\CDSRules.xsd">
+<Revision>1.0</Revision>
+<CustomerName>Digiturk</CustomerName>
+<ApplyAllTier>yes</ApplyAllTier>
+<Rule_Patterns>
+<PatternListGrp id = "noQuery">
+<UrlRegex>.*\?.*</UrlRegex>
+</PatternListGrp>
+</Rule_Patterns>
+<Rule_Actions>
+<Rule_UrlResolve matchGroup="noQuery" protocol="http">
+<SourceUrl regsub = "" rewrite-url = "" />
+<StorageUrl regsub = "http://(.*)(\?.*)" rewrite-url = "http://tx4sm.castup.net/$2" />
+</Rule_UrlResolve>
+</Rule_Actions>
+</CDSRules>

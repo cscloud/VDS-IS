@@ -1,0 +1,37 @@
+<CDSRules xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema\CDSRules.xsd">
+<Revision>1.0</Revision>
+<CustomerName>Yes-Live</CustomerName>
+<ApplyAllTier>yes</ApplyAllTier>
+<Rule_Patterns>
+<PatternListGrp id = "grp1">
+<Domain>live.yestve.co.il</Domain>
+</PatternListGrp>
+<PatternListGrp id = "grp2">
+<Domain>os.tve.yeseng.co.il</Domain>
+</PatternListGrp>
+</Rule_Patterns>
+
+<Rule_Actions>
+<Rule_Allow matchGroup="grp1,grp2" protocol="http"/>
+<Rule_SetAction name="Rule_DSConfig" matchGroup="grp1,grp2" protocol="http">
+<SetParameter name="SessionResolveRule#1" value=".*_(il|ru).m3u8(.*):none"/>
+<SetParameter name="SessionResolveRule#2" value="\/[Mm]anifest:none"/>
+<SetParameter name="GenericSessionPlay#1" value="(.*)ts(.*):none"/>
+<SetParameter name="GenericSessionPlay#2" value="\/[Ff]ragments:none"/>
+<SetParameter name="GenericSessionPlay#3" value="\/[Ff]ragmentInfo:none"/>
+<SetParameter name="SessionProtocol#1" value=".*.m3u8.*:protocol=$hls"/>
+<SetParameter name="SessionProtocol#2" value=".*.ts.*:protocol=$hls"/>
+<SetParameter name="SessionProtocol#3" value=".*.ism/.*:protocol=$hss"/>
+<SetParameter name="SessionBitrate#1" value=".*110.*(m3u8|ts):bitrate=177912"/>
+<SetParameter name="SessionBitrate#2" value=".*200.*(m3u8|ts):bitrate=270888"/>
+<SetParameter name="SessionBitrate#3" value=".*400.*(m3u8|ts):bitrate=477464"/>
+<SetParameter name="SessionBitrate#4" value=".*600.*(m3u8|ts):bitrate=741888"/>
+<SetParameter name="SessionBitrate#5" value=".*900.*(m3u8|ts):bitrate=1051776"/>
+<SetParameter name="SessionBitrate#6" value="[Qq]uality[Ll]evels\((.*)\)/.*video:bitrate=$1"/>
+<SetParameter name="SessionInactivityTimeout" value="6"/>
+<SetParameter name="SessionClientIpCheckEnable" value="0"/>
+<SetParameter name="StreamerSecretKey" value="1A2B3C4a5b6c7d8e9900A1B2C3D4E5C8"/>
+<SetParameter name="SessionIdleTimeout" value="360"/>
+</Rule_SetAction>
+</Rule_Actions>
+</CDSRules>

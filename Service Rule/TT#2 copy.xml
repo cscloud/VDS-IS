@@ -1,0 +1,28 @@
+<CDSRules xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema\CDSRules.xsd">
+<Revision>1.0</Revision>
+<CustomerName>TurkTelecom</CustomerName>
+<ApplyAllTier>yes</ApplyAllTier>
+<Rule_Patterns>
+<PatternListGrp id = "grp1">
+<Domain>turk.csi.cds.cisco.com</Domain>
+</PatternListGrp>
+<PatternListGrp id = "grp2">
+<Domain>cdvr-os.cds.cisco.com</Domain>
+</PatternListGrp>
+
+</Rule_Patterns>
+<Rule_Actions>
+<Rule_Allow matchGroup="grp1,grp2" protocol="http"/>
+<Rule_SetAction name="Rule_DSConfig" matchGroup="grp1,grp2" protocol="http">
+<SetParameter name="SessionResolveRule#1" value="(.*)m3u8(.*):none"/>
+<SetParameter name="GenericSessionPlay#1" value="(.*)ts(.*):none"/>
+<SetParameter name="SessionProtocol#1" value=".*:protocol=$generic_hls"/>
+<SetParameter name="SessionBitrate#1" value="(.*)/(.*)\hls/(.*):bitrate=$1"/>
+<SetParameter name="SessionProfile#1" value="(.*)/(.*)\hls/(.*):profile=$1"/>
+<SetParameter name="SessionInactivityTimeout" value="6"/>
+<SetParameter name="StreamerSecretKey" value="1A2B3C4a5b6c7d8e9900A1B2C3D4E5C8"/>
+<SetParameter name="SessionClientIpCheckEnable" value="0"/>
+<SetParameter name="SessionIdleTimeout" value="360"/>
+</Rule_SetAction>
+</Rule_Actions>
+</CDSRules>

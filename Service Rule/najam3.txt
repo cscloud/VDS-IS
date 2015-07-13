@@ -1,0 +1,21 @@
+<CDSRules xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema\CDSRules.xsd">
+<Revision>1.0</Revision>
+<CustomerName>VLatCE</CustomerName>
+<ApplyAllTier>yes</ApplyAllTier>
+<Rule_Patterns>
+<PatternListGrp id = "provider2">
+<Domain>hss10.is.perf.net</Domain>
+</PatternListGrp>
+<PatternListGrp id = "provider1">
+<Domain>hss11.is.perf.net</Domain>
+</PatternListGrp>
+</Rule_Patterns>
+<Rule_Actions>
+<Rule_UrlResolve matchGroup="provider2" protocol="http"><SourceUrl  regsub="http://(.*)hss10.is.perf.net/(.*)" rewrite-url="http://os-iis-10.perf.net/$2" />
+<StorageUrl regsub="http://(.*)hss10.is.perf.net/(.*)" rewrite-url="http://najam.perf.net/$2" />
+</Rule_UrlResolve>
+<Rule_UrlResolve matchGroup="provider1" protocol="http"><SourceUrl  regsub="http://(.*)hss11.is.perf.net/(.*)" rewrite-url="http://os-iis-11.perf.net/$2" />
+<StorageUrl regsub="http://(.*)hss11.is.perf.net/(.*)" rewrite-url="http://najam.perf.net/$2" />
+</Rule_UrlResolve>
+</Rule_Actions>
+</CDSRules>

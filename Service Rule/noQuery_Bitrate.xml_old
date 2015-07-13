@@ -1,0 +1,39 @@
+<CDSRules xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema\CDSRules.xsd">
+<Revision>1.0</Revision>
+<CustomerName>Digiturk</CustomerName>
+<ApplyAllTier>yes</ApplyAllTier>
+<Rule_Patterns>
+<PatternListGrp id = "noQuery">
+<UrlRegex>.*\?.*</UrlRegex>
+</PatternListGrp>
+<PatternListGrp id = "grp1">
+<Domain>c10sm.dt-vds-is.castup.net</Domain>
+</PatternListGrp>
+<PatternListGrp id = "grp2">
+<Domain>tx4sm.castup.net</Domain>
+</PatternListGrp>
+<PatternListGrp id = "grp3">
+<Domain>tx1sm.castup.net</Domain>
+</PatternListGrp>
+<PatternListGrp id = "grp4">
+<Domain>c11sm.dt-vds-is.castup.net</Domain>
+</PatternListGrp>
+</Rule_Patterns>
+
+<Rule_Actions>
+<Rule_UrlResolve matchGroup="noQuery" protocol="http">
+<SourceUrl regsub = "" rewrite-url = "" />
+<StorageUrl regsub = "http://(.*)(\?.*)" rewrite-url = "http://tx4sm.castup.net/$2" />
+</Rule_UrlResolve>
+<Rule_Allow matchGroup="grp1,grp2,grp3,grp4" protocol="http"/>
+<Rule_SetAction name="Rule_DSConfig" matchGroup="grp1,grp2,grp3,grp4" protocol="http">
+<SetParameter name="SessionResolveRule#1" value="\/Manifest:none"/>
+<SetParameter name="GenericSessionPlay#1" value="\/Fragments:none"/>
+<SetParameter name="SessionProtocol#1" value=".*:protocol=$generic_hss"/>
+<SetParameter name="SessionBitrate#1" value="QualityLevels\((.*)\)/.*video:bitrate=$1"/>
+<SetParameter name="SessionInactivityTimeout" value="6"/>
+<SetParameter name="SessionClientIpCheckEnable" value="0"/>
+<SetParameter name="SessionIdleTimeout" value="360"/>
+</Rule_SetAction>
+</Rule_Actions>
+</CDSRules>

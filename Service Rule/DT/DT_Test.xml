@@ -1,0 +1,51 @@
+<CDSRules xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema\CDSRules.xsd">
+<Revision>1.0</Revision>
+<CustomerName>DT</CustomerName>
+<ApplyAllTier>yes</ApplyAllTier>
+<Rule_Patterns>
+
+<!--http://cme.os.perf.net/svc20-atu1/ch004/two/three/hls/index.m3u8-->
+
+<PatternListGrp id = "tier2">
+<Domain>cme.is.perf.net</Domain>
+</PatternListGrp>
+
+<PatternListGrp id = "tier1">
+<Domain>cme.os.perf.net</Domain>
+</PatternListGrp>
+
+</Rule_Patterns>
+<Rule_Actions>
+
+<!--
+The first rule is designed for forwarding Source URL options to the Origin Server
+The second rule is designed for
+- stripping off URL options from the Storage URL
+- workarround: modifiing the path to exclude the dynamic TS tag from the phad for storage URL (see SR 627399583)
+-->
+
+<Rule_UrlResolve matchGroup="tier2" protocol="http">
+<SourceUrl regsub="http://(.*)cme.is.perf.net/(.*)" rewrite-url="http://cme.os.perf.net/$2"/>
+<StorageUrl regsub="http://(.*)cme.is.perf.net((/[-a-zA-Z0-9_.]+){4})/([-a-zA-Z0-9_.]+)/?([-a-zA-Z0-9_.]+)?(\?(.*))?" rewrite-url="http://cme.os.perf.net$2.$4.$5"/>
+</Rule_UrlResolve>
+
+<!--
+The following rules for using Session Logging with external session id.
+-->
+
+<Rule_Allow matchGroup="tier1,tier2" protocol="http"/>
+<Rule_SetAction name="Rule_DSConfig" matchGroup="tier1,tier2" protocol="http">
+<SetParameter name="SessionCookieTrackingEnable" value="1"/>
+<SetParameter name="SessionResolveRule#1" value=".*.m3u8:none"/>
+<SetParameter name="GenericSessionPlay#1" value="(.*)ts(.*):none"/>
+<SetParameter name="SessionBitrate#1" value="(.*)/svc20-atu1/(.*):bitrate=1429504"/>
+<SetParameter name="SessionBitrate#2" value="(.*)/two/(.*):bitrate=884736"/>
+<SetParameter name="SessionBitrate#3" value="(.*)/three/(.*):bitrate=512000"/>
+<SetParameter name="SessionBitrate#4" value="(.*)/hls/(.*):bitrate=317440"/>
+<SetParameter name="SessionProtocol#1" value=".*.m3u8.*:protocol=$hls"/>
+<SetParameter name="SessionProtocol#2" value=".*.ts.*:protocol=$hls"/>
+<SetParameter name="SessionIdleTimeout" value="420" />
+<SetParameter name="SessionInactivityTimeout" value="0" /> <!-- disabled: Session Start and Stop Notification is not used-->
+</Rule_SetAction>
+</Rule_Actions>
+</CDSRules>

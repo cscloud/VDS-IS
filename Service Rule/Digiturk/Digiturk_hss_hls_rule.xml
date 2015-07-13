@@ -1,0 +1,38 @@
+<CDSRules xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema\CDSRules.xsd">
+<Revision>1.0</Revision>
+<CustomerName>Digiturk</CustomerName>
+<ApplyAllTier>yes</ApplyAllTier>
+<Rule_Patterns>
+<PatternListGrp id = "cache">
+<UrlRegex>.*\?.*</UrlRegex>
+</PatternListGrp>
+<PatternListGrp id = "grp1">
+<Domain>c10sm.dt-vds-is.castup.net</Domain>
+</PatternListGrp>
+<PatternListGrp id = "grp2">
+<Domain>tx1sm.castup.net</Domain>
+</PatternListGrp>
+
+</Rule_Patterns>
+<Rule_Actions>
+<Rule_UrlRewrite matchGroup = "cache" protocol = "http" regsub = "http://(.*)(\?.*)" rewrite-url = "http://$1" />
+<Rule_Allow matchGroup="grp1,grp2,cache" protocol="http"/>
+<Rule_SetAction name="Rule_DSConfig" matchGroup="grp1,grp2,cache" protocol="http">
+<SetParameter name="SessionResolveRule#1" value="\/[Mm]anifest:none"/>
+<SetParameter name="GenericSessionPlay#1" value="\/[Ff]ragments:none"/>
+<SetParameter name="SessionProtocol#1" value=".*.ism/.*:protocol=$hss"/>
+<SetParameter name="SessionBitrate#1" value="[Qq]uality[Ll]evels\((.*)\)/.*video:bitrate=$1"/>
+<SetParameter name="SessionResolveRule#2" value="(.*)m3u8(.*):none"/>
+<SetParameter name="GenericSessionPlay#2" value="(.*)ts(.*):none"/>
+<SetParameter name="SessionProtocol#2" value=".*.m3u8.*:protocol=$hls"/>
+<SetParameter name="SessionProtocol#3" value=".*.ts.*:protocol=$hls"/>
+<SetParameter name="SessionBitrate#2" value="(.*)\.tsp/(.*)/(.*):bitrate=$2"/>
+<SetParameter name="StreamerSecretKey" value="1A2B3C4a5b6c7d8e9900A1B2C3D4E5C8"/>
+<SetParameter name="SessionInactivityTimeout" value="6"/>
+<SetParameter name="SessionClientIpCheckEnable" value="0"/>
+<SetParameter name="SessionCookieTrackingEnable" value="1"/>
+<SetParameter name="SessionSInfoTimeout" value="630"/>
+<SetParameter name="SessionIdleTimeout" value="660"/>
+</Rule_SetAction>
+</Rule_Actions>
+</CDSRules>

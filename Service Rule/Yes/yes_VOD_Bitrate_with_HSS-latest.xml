@@ -1,0 +1,41 @@
+<CDSRules xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema\CDSRules.xsd">
+<Revision>1.0</Revision>
+<CustomerName>Yes-VOD</CustomerName>
+<ApplyAllTier>yes</ApplyAllTier>
+<Rule_Patterns>
+<PatternListGrp id = "grp1">
+<Domain>vod.yestve.co.il</Domain>
+</PatternListGrp>
+<PatternListGrp id = "grp2">
+<Domain>172.18.50.196</Domain>
+</PatternListGrp>
+</Rule_Patterns>
+
+<Rule_Actions>
+<Rule_Allow matchGroup="grp1,grp2" protocol="http"/>
+<Rule_SetAction name="Rule_DSConfig" matchGroup="grp1,grp2" protocol="http">
+<SetParameter name="SessionResolveRule#1" value="\/TVE.*.m3u8(.*):none"/>
+<SetParameter name="SessionResolveRule#2" value="\/[Mm]anifest:none"/>
+<SetParameter name="GenericSessionPlay#1" value="(.*)ts(.*):none"/>
+<SetParameter name="GenericSessionPlay#2" value="\/[Ff]ragments:none"/>
+<SetParameter name="GenericSessionPlay#3" value="\/[Ff]ragmentInfo:none"/>
+<SetParameter name="SessionProtocol#1" value=".*.m3u8.*:protocol=$hls"/>
+<SetParameter name="SessionProtocol#2" value=".*.ts.*:protocol=$hls"/>
+<SetParameter name="SessionProtocol#3" value=".*.ism/.*:protocol=$hss"/>
+<SetParameter name="SessionBitrate#1" value=".*MUTE110.*(m3u8|ts):bitrate=221536"/>
+<SetParameter name="SessionBitrate#2" value=".*MUTE200.*(m3u8|ts):bitrate=313432"/>
+<SetParameter name="SessionBitrate#3" value=".*MUTE400.*(m3u8|ts):bitrate=520528"/>
+<SetParameter name="SessionBitrate#4" value=".*MUTE600.*(m3u8|ts):bitrate=794112"/>
+<SetParameter name="SessionBitrate#5" value=".*MUTE800.*(m3u8|ts):bitrate=996544"/>
+<SetParameter name="SessionBitrate#6" value=".*MUTE1000.*(m3u8|ts):bitrate=1196432"/>
+<SetParameter name="SessionBitrate#7" value=".*MUTE1300.*(m3u8|ts):bitrate=1502496"/>
+<SetParameter name="SessionBitrate#8" value=".*MUTE1700.*(m3u8|ts):bitrate=1906320"/>
+<SetParameter name="SessionBitrate#9" value=".*MUTE2000.*(m3u8|ts):bitrate=2209824"/>
+<SetParameter name="SessionBitrate#10" value="[Qq]uality[Ll]evels\((.*)\)/.*video:bitrate=$1"/>
+<SetParameter name="SessionInactivityTimeout" value="6"/>
+<SetParameter name="SessionClientIpCheckEnable" value="0"/>
+<SetParameter name="StreamerSecretKey" value="1A2B3C4a5b6c7d8e9900A1B2C3D4E5C8"/>
+<SetParameter name="SessionIdleTimeout" value="360"/>
+</Rule_SetAction>
+</Rule_Actions>
+</CDSRules>
